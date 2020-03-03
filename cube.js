@@ -34,35 +34,35 @@ if (prenumgrid == 0)
 ]
 else if (prenumgrid == 1)
 	newgrid = [
-	[[' ',' ',' ',' ',' '],
-	 [' ','D','U','D',' '],
-	 [' ','U','U','U',' '],
-	 [' ','D','U','D',' '],
-	 [' ',' ',' ',' ',' ']],
-
-	 [[' ','D','B','D',' '],
-	 ['D',' ',' ',' ','D'],
-	 ['L',' ',' ',' ','R'],
-	 ['D',' ',' ',' ','D'],
-	 [' ','D','F','D',' ']],
-
-	[[' ','D','B','D',' '],
-	 ['D',' ',' ',' ','D'],
-	 ['L',' ',' ',' ','R'],
-	 ['D',' ',' ',' ','D'],
-	 [' ','D','F','D',' ']],
-	 
-	[[' ','D','D','D',' '],
-	 ['D',' ',' ',' ','D'],
-	 ['D',' ',' ',' ','D'],
-	 ['D',' ',' ',' ','D'],
-	 [' ','D','D','D',' ']],
+		[[' ',' ',' ',' ',' '],
+		 [' ','U','U','U',' '],
+		 [' ','U','U','U',' '],
+		 [' ','U','U','U',' '],
+		 [' ',' ',' ',' ',' ']],
 	
-	[[' ',' ',' ',' ',' '],
-	 [' ','D','D','D',' '],
-	 [' ','D','D','D',' '],
-	 [' ','D','D','D',' '],
-	 [' ',' ',' ',' ',' ']]
+		[[' ','B','B','B',' '],
+		 ['L',' ',' ',' ','R'],
+		 ['L',' ',' ',' ','R'],
+		 ['L',' ',' ',' ','R'],
+		 [' ','F','F','F',' ']],
+	
+		[[' ','B','B','B',' '],
+		 ['L',' ',' ',' ','R'],
+		 ['L',' ',' ',' ','R'],
+		 ['L',' ',' ',' ','R'],
+		 [' ','F','F','F',' ']],
+		 
+		[[' ','P','B','P',' '],
+		 ['P',' ',' ',' ','P'],
+		 ['L',' ',' ',' ','R'],
+		 ['P',' ',' ',' ','P'],
+		 [' ','P','F','P',' ']],
+		
+		[[' ',' ',' ',' ',' '],
+		 [' ','P','D','P',' '],
+		 [' ','D','D','D',' '],
+		 [' ','P','D','P',' '],
+		 [' ',' ',' ',' ',' ']]
 ];
 
 let curentgrid = JSON.parse(JSON.stringify(newgrid));
@@ -536,7 +536,12 @@ function countoppocross(data, testgrid, smallcube) {
 function creatcross(virtualgrid) {
 	let lstface = nameMove.split("")
 	let keepmov = BADRETURN;
-	let keepface = lstface[0];
+	// let keepface = lstface[0];
+
+	//UD ok
+	//LRFB to test
+
+	let keepface = 'U';
 	let lsttest = [
 		testercross,
 		testercross,
@@ -884,7 +889,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'U').replace(/c/g, 'L');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'L');
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'B');
 				}
 			}
 			else if (cpycube[crossinfo[3] * 2][1][2] == oppoface && cpycube[crossinfo[3] * 2][2][3] == oppoface) {
@@ -892,7 +897,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'U').replace(/c/g, 'F');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'F');
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'L');
 				}
 			}
 			else if (cpycube[crossinfo[3] * 2][1][2] == oppoface && cpycube[crossinfo[3] * 2][2][1] == oppoface) {
@@ -900,7 +905,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'U').replace(/c/g, 'R');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'R');
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'F');
 				}
 			}
 			else if (cpycube[crossinfo[3] * 2][3][2] == oppoface && cpycube[crossinfo[3] * 2][2][1] == oppoface) {
@@ -908,8 +913,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'U').replace(/c/g, 'B');
 				}
 				else if (crossinfo[3] == 2) {
-					console.log('dada')
-					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'B');
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'R');
 				}
 			}
 		}
@@ -919,7 +923,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'B').replace(/c/g, 'U');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'U');
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'L');
 				}
 			}
 			else if (cpycube[1][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][3] == oppoface) {
@@ -927,7 +931,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'B').replace(/c/g, 'R');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'R');
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'U');
 				}
 			}
 			else if (cpycube[1][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][1] == oppoface) {
@@ -935,7 +939,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'B').replace(/c/g, 'D');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'D');
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'R');
 				}
 			}
 			else if (cpycube[3][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][1] == oppoface) {
@@ -943,7 +947,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'L');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'L');
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'D');
 				}
 			}
 		}
@@ -953,7 +957,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'L').replace(/c/g, 'B');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'B');
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'R').replace(/c/g, 'U');
 				}
 			}
 			else if (cpycube[1][2][crossinfo[3] * 2] == oppoface && cpycube[2][3][crossinfo[3] * 2] == oppoface) {
@@ -961,7 +965,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'L').replace(/c/g, 'D');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'D');
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'B');
 				}
 			}
 			else if (cpycube[1][2][crossinfo[3] * 2] == oppoface && cpycube[2][1][crossinfo[3] * 2] == oppoface) {
@@ -969,7 +973,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'F');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'R').replace(/c/g, 'F');
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'D');
 				}
 			}
 			else if (cpycube[3][2][crossinfo[3] * 2] == oppoface && cpycube[2][1][crossinfo[3] * 2] == oppoface) {
@@ -977,7 +981,7 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'U');
 				}
 				else if (crossinfo[3] == 2) {
-					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'R').replace(/c/g, 'U');
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'R').replace(/c/g, 'F');
 				}
 			}
 		}
@@ -1017,39 +1021,39 @@ function creatoppoface(oppoface, virtualgrid, lastmove) {
 		}
 		if (crossinfo[2] == 'x' && crossinfo[3] == 0) {
 			if(cpycube[0][1][2] == cpycube[0][2][2])
-				solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'U');
+				solution += "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'U');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'U');
+				solution += "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'U');
 		}
 		else if (crossinfo[2] == 'x' && crossinfo[3] == 2) {
 			if(cpycube[4][1][2] == cpycube[4][2][2])
-				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D');
+				solution += "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'D');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'D');
+				solution += "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D');
 		}
 		else if (crossinfo[2] == 'y' && crossinfo[3] == 0) {
-			if(cpycube[1][0][2] == cpycube[2][0][2])
-				solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'B');
+			if(cpycube[1][0][2] != cpycube[2][0][2])
+				solution += "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'B');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'B')
+				solution += "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'B')
 		}
 		else if (crossinfo[2] == 'y' && crossinfo[3] == 2) {
-			if(cpycube[1][4][2] == cpycube[2][4][2])
-				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'F');
+			if(cpycube[1][4][2] != cpycube[2][4][2])
+				solution += "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'F');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'F');
+				solution += "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'F');
 		}
 		else if (crossinfo[2] == 'z' && crossinfo[3] == 0) {
-			if(cpycube[1][2][0] == cpycube[2][2][0])
-				solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'L');
+			if(cpycube[1][2][0] != cpycube[2][2][0])
+				solution += "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'L');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'L');
+				solution += "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'L');
 		}
 		else if (crossinfo[2] == 'z' && crossinfo[3] == 2) {
-			if(cpycube[1][2][4] == cpycube[2][2][4])
-				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
+			if(cpycube[1][2][4] != cpycube[2][2][4])
+				solution += "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
 			else
-				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
+				solution += "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
 		}
 	}
 	return solution.split(/(?=[U,L,B,R,F,D])/)
