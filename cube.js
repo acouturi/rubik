@@ -1,5 +1,3 @@
-// UDBD2B2R'B2D'LR'B2F'L2U2L2F'B'F2D2F'D'R2BL'U2L'F2DFB2
-
 let newgrid = ''
 let prenumgrid = 0
 if (prenumgrid == 0)
@@ -155,7 +153,6 @@ let nameMove = 'ULBDRF';
 let addMove = ["","'","2"]
 let listauto = "ULBDRF'2";
 const BADRETURN = "UUUUUUUUUUUUUUUUUUUUU".split("")
-// const BADRETURN = "UUU".split("")
 
 
 
@@ -197,7 +194,6 @@ function alltest(data, testcube, banmouv, maxlength, lastmove, listmove, tester)
 
 
 
-// data = [workingface, iteration]
 function testercross(data, testgrid, smallcube) {
 	for (let x = 0; x < 3; x++) {
 		for (let y = 0; y < 3; y++) {
@@ -249,9 +245,35 @@ function testercross(data, testgrid, smallcube) {
 	return false
 }
 
+function looptest(data, lsttest, virtualgrid, maxlength, banmov = []) {
+	let lstmov = [];
+	let solution = [];
+	for (let j = 0; j < lsttest.length; j++) {
+		const testname = lsttest[j];
+		if (!testname(data.concat(j + 1), virtualgrid, compactcube(virtualgrid))) {
+			lststack = [];
+			solution = alltest([data, j + 1], virtualgrid, banmov, maxlength,  ['',''], [], testname)
+			if (solution == 0)
+				return BADRETURN;
+			for (let i = 0; i < solution.length; i++) {
+				if (solution[i].length > 2)
+					return BADRETURN;
+				for (let j = 0; j < solution[i].length; j++) {
+					if (listauto.indexOf(solution[i][j]) == -1)
+						return BADRETURN;
+				}	
+			}
+			applimidsolve(solution,virtualgrid)
+			lstmov = lstmov.concat(solution)
+		}
+		if (lstmov === 0)
+			return BADRETURN
+	}
+	return lstmov
+}
 
 
-// data = [workingface, iteration]
+
 function testplaceangle(data, testgrid, smallcube) {
 	if (!testerangle([data[0],data[1]-1], testgrid, smallcube))
 		return false;
@@ -307,7 +329,6 @@ function testplaceangle(data, testgrid, smallcube) {
 	return false
 }
 
-// data = [workingface, iteration]
 function testerangle(data, testgrid, smallcube) {
 	if (!testercross([data[0],4], testgrid, smallcube))
 		return false;
@@ -321,15 +342,12 @@ function testerangle(data, testgrid, smallcube) {
 								((testgrid[x * 2][1][1] == data[0] &&
 								testgrid[x + 1][0][1] == testgrid[x + 1][0][2] &&
 								testgrid[x + 1][1][0] == testgrid[x + 1][2][0]) +
-								
 								(testgrid[x * 2][3][1] == data[0] &&
 								testgrid[x + 1][4][1] == testgrid[x + 1][4][2] &&
 								testgrid[x + 1][3][0] == testgrid[x + 1][2][0]) +
-
 								(testgrid[x * 2][1][3] == data[0] &&
 								testgrid[x + 1][0][3] == testgrid[x + 1][0][2] &&
 								testgrid[x + 1][1][4] == testgrid[x + 1][2][4]) +
-								
 								(testgrid[x * 2][3][3] == data[0] &&
 								testgrid[x + 1][4][3] == testgrid[x + 1][4][2] &&
 								testgrid[x + 1][3][4] == testgrid[x + 1][2][4]) >= ((data[1] - 1) / 2)))
@@ -340,15 +358,12 @@ function testerangle(data, testgrid, smallcube) {
 								((testgrid[1][y * 2][1] == data[0] &&
 								testgrid[0][y + 1][1] == testgrid[0][y + 1][2] &&
 								testgrid[1][y + 1][0] == testgrid[2][y + 1][0]) +
-								
 								(testgrid[3][y * 2][1] == data[0] &&
 								testgrid[4][y + 1][1] == testgrid[4][y + 1][2] &&
 								testgrid[3][y + 1][0] == testgrid[2][y + 1][0]) +
-
 								(testgrid[1][y * 2][3] == data[0] &&
 								testgrid[0][y + 1][3] == testgrid[0][y + 1][2] &&
 								testgrid[1][y + 1][4] == testgrid[2][y + 1][4]) +
-								
 								(testgrid[3][y * 2][3] == data[0] &&
 								testgrid[4][y + 1][3] == testgrid[4][y + 1][2] &&
 								testgrid[3][y + 1][4] == testgrid[2][y + 1][4]) >= ((data[1] - 1) / 2)))
@@ -359,15 +374,12 @@ function testerangle(data, testgrid, smallcube) {
 								((testgrid[1][1][z * 2] == data[0] &&
 								testgrid[0][1][z + 1] == testgrid[0][2][z + 1] &&
 								testgrid[1][0][z + 1] == testgrid[2][0][z + 1]) +
-								
 								(testgrid[3][1][z * 2] == data[0] &&
 								testgrid[4][1][z + 1] == testgrid[4][2][z + 1] &&
 								testgrid[3][0][z + 1] == testgrid[2][0][z + 1]) +
-
 								(testgrid[1][3][z * 2] == data[0] &&
 								testgrid[0][3][z + 1] == testgrid[0][2][z + 1] &&
 								testgrid[1][4][z + 1] == testgrid[2][4][z + 1]) +
-								
 								(testgrid[3][3][z * 2] == data[0] &&
 								testgrid[4][3][z + 1] == testgrid[4][2][z + 1] &&
 								testgrid[3][4][z + 1] == testgrid[2][4][z + 1]) >= ((data[1] - 1) / 2)))
@@ -382,16 +394,11 @@ function testerangle(data, testgrid, smallcube) {
 	return false
 }
 
-
-// data = [workingface, nbgoodneed, iteration]
 function testplacesecond(data, testgrid, smallcube) {
-	// console.log('bip')
 	if (!testsecondlayer(data, testgrid, smallcube))
 		return false;
-	// console.log('biip',data[2]+1)
 	if (testsecondlayer([data[0],data[1],data[2]+1], testgrid, smallcube))
 		return true;
-	// console.log('biiip')
 	for (let x = 0; x < 3; x++) {
 		for (let y = 0; y < 3; y++) {
 			for (let z = 0; z < 3; z++) {
@@ -406,19 +413,19 @@ function testplacesecond(data, testgrid, smallcube) {
 								return true;
 						}
 						else if (y != 1) {
-							if ((testgrid[x * 2][2][2] == data[1]) &&
-								(testgrid[x + 1][0][2] != data[1] && testgrid[x * 2][1][2] != data[1] ||
-								testgrid[x + 1][4][2] != data[1] && testgrid[x * 2][3][2] != data[1] ||
-								testgrid[x + 1][2][0] != data[1] && testgrid[x * 2][2][1] != data[1] ||
-								testgrid[x + 1][2][4] != data[1] && testgrid[x * 2][2][3] != data[1]))
+							if ((testgrid[2][y * 2][2] == data[1]) &&
+								(testgrid[0][y + 1][2] != data[1] && testgrid[1][y * 2][2] != data[1] ||
+								testgrid[4][y + 1][2] != data[1] && testgrid[3][y * 2][2] != data[1] ||
+								testgrid[2][y + 1][0] != data[1] && testgrid[2][y * 2][1] != data[1] ||
+								testgrid[2][y + 1][4] != data[1] && testgrid[2][y * 2][3] != data[1]))
 								return true;
 						}
 						else if (z != 1) {
-							if ((testgrid[x * 2][2][2] == data[1]) &&
-								(testgrid[x + 1][0][2] != data[1] && testgrid[x * 2][1][2] != data[1] ||
-								testgrid[x + 1][4][2] != data[1] && testgrid[x * 2][3][2] != data[1] ||
-								testgrid[x + 1][2][0] != data[1] && testgrid[x * 2][2][1] != data[1] ||
-								testgrid[x + 1][2][4] != data[1] && testgrid[x * 2][2][3] != data[1]))
+							if ((testgrid[2][2][z * 2] == data[1]) &&
+								(testgrid[2][0][z + 1] != data[1] && testgrid[2][1][z * 2] != data[1] ||
+								testgrid[2][4][z + 1] != data[1] && testgrid[2][3][z * 2] != data[1] ||
+								testgrid[0][2][z + 1] != data[1] && testgrid[1][2][z * 2] != data[1] ||
+								testgrid[4][2][z + 1] != data[1] && testgrid[3][2][z * 2] != data[1]))
 								return true;
 						}
 						return false;
@@ -430,79 +437,52 @@ function testplacesecond(data, testgrid, smallcube) {
 	return false
 }
 
-// data = [workingface, nbgoodneed, iteration]
 function testsecondlayer(data, testgrid, smallcube) { 
 	if (data[2] == 0)
 		return true
-	// console.log('da')
 	if (!testerangle([data[0],4], testgrid, smallcube))
 		return false;
-	// console.log('di')
 	for (let x = 0; x < 3; x++) {
 		for (let y = 0; y < 3; y++) {
 			for (let z = 0; z < 3; z++) {
 				if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
 					if (smallcube[x][y][z] == data[0]) {
 						if (x != 1) {
-							// console.log('a',data)
-							// console.log(JSON.parse(JSON.stringify(testgrid)))
 							if((testgrid[x * 2][2][2] == data[0]) &&
 								(((testgrid[2][0][1] == testgrid[2][0][2] &&
 								testgrid[2][1][0] == testgrid[2][2][0]) +
-								
 								(testgrid[2][0][3] == testgrid[2][0][2] &&
 								testgrid[2][1][4] == testgrid[2][2][4]) +
-								
 								(testgrid[2][4][1] == testgrid[2][4][2] &&
 								testgrid[2][3][0] == testgrid[2][2][0]) +
-								
 								(testgrid[2][4][3] == testgrid[2][4][2] &&
 								testgrid[2][3][4] == testgrid[2][2][4])) >= data[2]))
-								{
-									// console.log(((testgrid[2][0][1] == testgrid[2][0][2] &&										testgrid[2][1][0] == testgrid[2][2][0]) +										(testgrid[2][0][3] == testgrid[2][0][2] &&										testgrid[2][1][4] == testgrid[2][2][4]) +										(testgrid[2][4][1] == testgrid[2][4][2] &&										testgrid[2][3][0] == testgrid[2][2][0]) +										(testgrid[2][4][3] == testgrid[2][4][2] &&										testgrid[2][1][4] == testgrid[2][2][4])))
-									// console.log(data[2])
-									return true;
-								}
+								return true;
 						}
 						else if (y != 1) {
 							if((testgrid[2][y * 2][2] == data[0]) &&
 								(((testgrid[0][2][1] == testgrid[0][2][2] &&
 								testgrid[1][2][0] == testgrid[2][2][0]) +
-								
 								(testgrid[0][2][3] == testgrid[0][2][2] &&
 								testgrid[1][2][4] == testgrid[2][2][4]) +
-								
 								(testgrid[4][2][1] == testgrid[4][2][2] &&
 								testgrid[3][2][0] == testgrid[2][2][0]) +
-								
 								(testgrid[4][2][3] == testgrid[4][2][2] &&
 								testgrid[3][2][4] == testgrid[2][2][4])) >= data[2]))
-								{
-									// console.log(((testgrid[0][2][1] == testgrid[0][2][2] &&										testgrid[1][2][0] == testgrid[2][2][0]) +										(testgrid[0][2][3] == testgrid[0][2][2] &&										testgrid[1][2][4] == testgrid[2][2][4]) +										(testgrid[4][2][1] == testgrid[4][2][2] &&										testgrid[3][2][0] == testgrid[2][2][0]) +										(testgrid[4][2][3] == testgrid[4][2][2] &&										testgrid[1][2][4] == testgrid[2][2][4])))
-									// console.log(data[2])
-									return true;
-								}
+								return true;
 						}
 						else if (z != 1) {
 							if((testgrid[2][2][z * 2] == data[0]) &&
-								(((testgrid[0][1][2] == testgrid[0][2][2] &&
+							(((testgrid[0][1][2] == testgrid[0][2][2] &&
 								testgrid[1][0][2] == testgrid[2][0][2]) +
-								
 								(testgrid[0][3][2] == testgrid[0][2][2] &&
 								testgrid[1][4][2] == testgrid[2][4][2]) +
-								
 								(testgrid[4][1][2] == testgrid[4][2][2] &&
 								testgrid[3][0][2] == testgrid[2][0][2]) +
-								
 								(testgrid[4][3][2] == testgrid[4][2][2] &&
 								testgrid[3][4][2] == testgrid[2][4][2])) >= data[2]))
-								{
-									// console.log(((testgrid[0][1][2] == testgrid[0][2][2] &&										testgrid[1][0][2] == testgrid[2][0][2]) +										(testgrid[0][3][2] == testgrid[0][2][2] &&										testgrid[1][4][2] == testgrid[2][4][2]) +										(testgrid[4][1][2] == testgrid[4][2][2] &&										testgrid[3][0][2] == testgrid[2][0][2]) +										(testgrid[4][3][2] == testgrid[4][2][2] &&										testgrid[1][4][2] == testgrid[2][4][2])))
-									// console.log(data[2])
-									return true;
-								}
+								return true;
 						}
-						// console.log('du')
 						return false;
 					}
 				}
@@ -512,34 +492,46 @@ function testsecondlayer(data, testgrid, smallcube) {
 	return false
 }
 
-
-
-function looptest(data, lsttest, virtualgrid, maxlength, banmov = []) {
-	let lstmov = [];
-	let solution = [];
-	for (let j = 0; j < lsttest.length; j++) {
-		const testname = lsttest[j];
-		if (!testname(data.concat(j + 1), virtualgrid, compactcube(virtualgrid))) {
-			lststack = [];
-			solution = alltest([data, j + 1], virtualgrid, banmov, maxlength,  ['',''], [], testname)
-			if (solution == 0)
-				return BADRETURN;
-			for (let i = 0; i < solution.length; i++) {
-				if (solution[i].length > 2)
-					return BADRETURN;
-				for (let j = 0; j < solution[i].length; j++) {
-					if (listauto.indexOf(solution[i][j]) == -1)
-						return BADRETURN;
-				}	
+function countoppocross(data, testgrid, smallcube) {
+	for (let x = 0; x < 3; x++) {
+		for (let y = 0; y < 3; y++) {
+			for (let z = 0; z < 3; z++) {
+				if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
+					if (smallcube[x][y][z] == data[0]) {
+						if (x != 1) {
+							let nb = 0 + (testgrid[x * 2][1][2] == testgrid[x * 2][2][2]) + (testgrid[x * 2][2][3] == testgrid[x * 2][2][2]) +
+									(testgrid[x * 2][2][1] == testgrid[x * 2][2][2]) + (testgrid[x * 2][3][2]== testgrid[x * 2][2][2] )
+							let barre = (testgrid[x * 2][1][2] == testgrid[x * 2][3][2] && testgrid[x * 2][1][2] == testgrid[x * 2][2][2]) ||
+										(testgrid[x * 2][2][1] == testgrid[x * 2][2][3] && testgrid[x * 2][2][1] == testgrid[x * 2][2][2])
+							return [nb, barre, 'x', x]
+						}
+						else if (y != 1) {
+							let nb = 0 + (testgrid[1][y * 2][2] == testgrid[2][y * 2][2]) + (testgrid[2][y * 2][3] == testgrid[2][y * 2][2]) +
+									(testgrid[2][y * 2][1] == testgrid[2][y * 2][2]) + (testgrid[3][y * 2][2]== testgrid[2][y * 2][2] )
+							let barre = (testgrid[1][y * 2][2] == testgrid[3][y * 2][2] && testgrid[1][y * 2][2] == testgrid[2][y * 2][2]) ||
+										(testgrid[2][y * 2][1] == testgrid[2][y * 2][3] && testgrid[2][y * 2][1] == testgrid[2][y * 2][2])
+							return [nb, barre, 'y', y]
+						}
+						else if (z != 1) {
+							let nb = 0 + (testgrid[1][2][z * 2] == testgrid[2][2][z * 2]) + (testgrid[2][3][z * 2] == testgrid[2][2][z * 2]) +
+									(testgrid[2][1][z * 2] == testgrid[2][2][z * 2]) + (testgrid[3][2][z * 2]== testgrid[2][2][z * 2] )
+							let barre = (testgrid[1][2][z * 2] == testgrid[3][2][z * 2] && testgrid[1][2][z * 2] == testgrid[2][2][z * 2]) ||
+										(testgrid[2][1][z * 2] == testgrid[2][3][z * 2] && testgrid[2][1][z * 2] == testgrid[2][2][z * 2])
+							return [nb, barre, 'z', z]
+						}
+					}
+				}
 			}
-			applimidsolve(solution,virtualgrid)
-			lstmov = lstmov.concat(solution)
 		}
-		if (lstmov === 0)
-			return BADRETURN
 	}
-	return lstmov
+	console.error('ca marche pas...')
+	return [0,false]
 }
+
+
+
+
+
 
 function creatcross(virtualgrid) {
 	let lstface = nameMove.split("")
@@ -553,7 +545,7 @@ function creatcross(virtualgrid) {
 	]
 
 	if(document.getElementById('speedy').value == 0) {
-		let tmp = looptest([lstface[0]], lsttest, JSON.parse(JSON.stringify(virtualgrid)), keepmov.length)
+		let tmp = looptest(keepface, lsttest, JSON.parse(JSON.stringify(virtualgrid)), keepmov.length)
 		return [tmp, keepface];
 	}
 	for (let i = 0; i < lstface.length; i++) {
@@ -581,90 +573,82 @@ function creatface(startingface, virtualgrid) {
 	return looptest([startingface], lsttest, JSON.parse(JSON.stringify(virtualgrid)), BADRETURN.length)
 }
 
-function creatsecond(startingface, virtualgrid) {
-	// testsecondlayer,
-
-	let opoface = nameMove[(nameMove.indexOf(startingface) + 3) % 6]
+function creatsecond(oppoface, startingface, virtualgrid) {
 	let cpycube = JSON.parse(JSON.stringify(virtualgrid))
 	let solution = []
-	for (let i = 0; i < 3; i++) {
-		// if (!testplacesecond([startingface,opoface,i],cpycube,compactcube(cpycube))) {
-		// 	let solv = looptest([startingface,opoface,i], [testplacesecond], JSON.parse(JSON.stringify(cpycube)), BADRETURN.length, [startingface])
-		// 	applimidsolve(solv, cpycube)
-		// 	solution = solution.concat(solv)
-		// }
+	for (let i = 0; i < 4; i++) {
 		let smallcube = compactcube(cpycube)
-		if (!testplacesecond([startingface,opoface,i],cpycube,smallcube)) {
+		if (!testplacesecond([startingface,oppoface,i],cpycube,smallcube)) {
 			let smallcube = compactcube(cpycube)
 			let solv = ''
 			let count = 0;
 			while (solv == '') {
 				count++
-				if (!testplacesecond([startingface,opoface,i],cpycube,smallcube)) {
+				if (!testplacesecond([startingface,oppoface,i],cpycube,smallcube)) {
 					for (let x = 0; x < 3; x++) {
-							for (let y = 0; y < 3; y++) {
-								for (let z = 0; z < 3; z++) {
-									if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
-										if (smallcube[x][y][z] == opoface) {
+						for (let y = 0; y < 3; y++) {
+							for (let z = 0; z < 3; z++) {
+								if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
+									if (smallcube[x][y][z] == oppoface) {
 										if (x == 0) {
-											if (cpycube[2][3][4] != opoface && cpycube[2][4][3] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'L').replace(/c/g, 'B');
-											else if (cpycube[2][4][1] != opoface && cpycube[2][3][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'F').replace(/c/g, 'L');
-											else if (cpycube[2][1][4] != opoface && cpycube[2][0][3] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'B').replace(/c/g, 'R');
-											else if (cpycube[2][4][3] != opoface && cpycube[2][3][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'R').replace(/c/g, 'F');
+												 if (cpycube[2][3][4] != oppoface && cpycube[2][4][3] != oppoface && (cpycube[2][3][4] != cpycube[2][2][4] || cpycube[2][4][3] != cpycube[2][4][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'R').replace(/c/g, 'F');
+											else if (cpycube[2][3][0] != oppoface && cpycube[2][4][1] != oppoface && (cpycube[2][3][0] != cpycube[2][2][0] || cpycube[2][4][1] != cpycube[2][4][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'F').replace(/c/g, 'L');
+											else if (cpycube[2][1][0] != oppoface && cpycube[2][0][1] != oppoface && (cpycube[2][1][0] != cpycube[2][2][0] || cpycube[2][0][1] != cpycube[2][0][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'L').replace(/c/g, 'B');
+											else if (cpycube[2][1][4] != oppoface && cpycube[2][0][3] != oppoface && (cpycube[2][1][4] != cpycube[2][2][4] || cpycube[2][0][3] != cpycube[2][0][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'B').replace(/c/g, 'R');
 										}
 										else if (x == 2) {
-											if (cpycube[2][0][3] != opoface && cpycube[2][1][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'R').replace(/c/g, 'B');
-											else if (cpycube[2][0][1] != opoface && cpycube[2][1][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'B').replace(/c/g, 'L');
-											else if (cpycube[2][4][3] != opoface && cpycube[2][3][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'F').replace(/c/g, 'R');
-											else if (cpycube[2][4][1] != opoface && cpycube[2][3][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'L').replace(/c/g, 'F');
+												 if (cpycube[2][3][4] != oppoface && cpycube[2][4][3] != oppoface && (cpycube[2][3][4] != cpycube[2][2][4] || cpycube[2][4][3] != cpycube[2][4][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'F').replace(/c/g, 'R');
+											else if (cpycube[2][3][0] != oppoface && cpycube[2][4][1] != oppoface && (cpycube[2][3][0] != cpycube[2][2][0] || cpycube[2][4][1] != cpycube[2][4][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'L').replace(/c/g, 'F');
+											else if (cpycube[2][1][0] != oppoface && cpycube[2][0][1] != oppoface && (cpycube[2][1][0] != cpycube[2][2][0] || cpycube[2][0][1] != cpycube[2][0][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'B').replace(/c/g, 'L');
+											else if (cpycube[2][1][4] != oppoface && cpycube[2][0][3] != oppoface && (cpycube[2][1][4] != cpycube[2][2][4] || cpycube[2][0][3] != cpycube[2][0][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'R').replace(/c/g, 'B');
 										}
 										else if (y == 0) {
-											if (cpycube[0][2][3] != opoface && cpycube[1][2][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'R').replace(/c/g, 'U');
-											else if (cpycube[0][2][1] != opoface && cpycube[1][2][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'U').replace(/c/g, 'L');
-											else if (cpycube[4][2][3] != opoface && cpycube[3][2][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'D').replace(/c/g, 'R');
-											else if (cpycube[4][2][1] != opoface && cpycube[3][2][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'L').replace(/c/g, 'D');
+												 if (cpycube[3][2][4] != oppoface && cpycube[4][2][3] != oppoface && (cpycube[3][2][4] != cpycube[2][2][4] || cpycube[4][2][3] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'D').replace(/c/g, 'R');
+											else if (cpycube[3][2][0] != oppoface && cpycube[4][2][1] != oppoface && (cpycube[3][2][0] != cpycube[2][2][0] || cpycube[4][2][1] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'L').replace(/c/g, 'D');
+											else if (cpycube[1][2][0] != oppoface && cpycube[0][2][1] != oppoface && (cpycube[1][2][0] != cpycube[2][2][0] || cpycube[0][2][1] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'U').replace(/c/g, 'L');
+											else if (cpycube[1][2][4] != oppoface && cpycube[0][2][3] != oppoface && (cpycube[1][2][4] != cpycube[2][2][4] || cpycube[0][2][3] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'R').replace(/c/g, 'U');
 										}
 										else if (y == 2) {
-											if (cpycube[0][2][1] != opoface && cpycube[1][2][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'L').replace(/c/g, 'U');
-											else if (cpycube[0][2][3] != opoface && cpycube[1][2][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'D').replace(/c/g, 'L');
-											else if (cpycube[4][2][1] != opoface && cpycube[3][2][0] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'U').replace(/c/g, 'R');
-											else if (cpycube[4][2][3] != opoface && cpycube[3][2][4] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'R').replace(/c/g, 'D');
+												 if (cpycube[3][2][4] != oppoface && cpycube[4][2][3] != oppoface && (cpycube[3][2][4] != cpycube[2][2][4] || cpycube[4][2][3] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'R').replace(/c/g, 'D');
+											else if (cpycube[3][2][0] != oppoface && cpycube[4][2][1] != oppoface && (cpycube[3][2][0] != cpycube[2][2][0] || cpycube[4][2][1] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'D').replace(/c/g, 'L');
+											else if (cpycube[1][2][0] != oppoface && cpycube[0][2][1] != oppoface && (cpycube[1][2][0] != cpycube[2][2][0] || cpycube[0][2][1] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'L').replace(/c/g, 'U');
+											else if (cpycube[1][2][4] != oppoface && cpycube[0][2][3] != oppoface && (cpycube[1][2][4] != cpycube[2][2][4] || cpycube[0][2][3] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'U').replace(/c/g, 'R');
 										}
 										else if (z == 0) {
-											if (cpycube[1][4][2] != opoface && cpycube[0][3][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'L').replace(/c/g, 'U');
-											else if (cpycube[1][0][2] != opoface && cpycube[0][1][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'D').replace(/c/g, 'B');
-											else if (cpycube[3][4][2] != opoface && cpycube[4][3][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'U').replace(/c/g, 'F');
-											else if (cpycube[3][0][2] != opoface && cpycube[4][1][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'R').replace(/c/g, 'D');
+												 if (cpycube[3][4][2] != oppoface && cpycube[4][3][2] != oppoface && (cpycube[3][4][2] != cpycube[2][4][2] || cpycube[4][3][2] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'F').replace(/c/g, 'D');
+											else if (cpycube[3][0][2] != oppoface && cpycube[4][1][2] != oppoface && (cpycube[3][0][2] != cpycube[2][0][2] || cpycube[4][1][2] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'D').replace(/c/g, 'B');
+											else if (cpycube[1][0][2] != oppoface && cpycube[0][1][2] != oppoface && (cpycube[1][0][2] != cpycube[2][0][2] || cpycube[0][1][2] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'B').replace(/c/g, 'U');
+											else if (cpycube[1][4][2] != oppoface && cpycube[0][3][2] != oppoface && (cpycube[1][4][2] != cpycube[2][4][2] || cpycube[0][3][2] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'U').replace(/c/g, 'F');
 										}
 										else if (z == 2) {
-											if (cpycube[4][3][2] != opoface && cpycube[3][4][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'F').replace(/c/g, 'U');
-											else if (cpycube[4][3][2] != opoface && cpycube[3][4][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'U').replace(/c/g, 'B');
-											else if (cpycube[4][3][2] != opoface && cpycube[3][4][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'D').replace(/c/g, 'F');
-											else if (cpycube[4][3][2] != opoface && cpycube[3][4][2] != opoface)
-												solv = "ada'd'a'c'aca'da'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'B').replace(/c/g, 'D');
+												 if (cpycube[3][4][2] != oppoface && cpycube[4][3][2] != oppoface && (cpycube[3][4][2] != cpycube[2][4][2] || cpycube[4][3][2] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'D').replace(/c/g, 'F');
+											else if (cpycube[3][0][2] != oppoface && cpycube[4][1][2] != oppoface && (cpycube[3][0][2] != cpycube[2][0][2] || cpycube[4][1][2] != cpycube[4][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'B').replace(/c/g, 'D');
+											else if (cpycube[1][0][2] != oppoface && cpycube[0][1][2] != oppoface && (cpycube[1][0][2] != cpycube[2][0][2] || cpycube[0][1][2] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'U').replace(/c/g, 'B');
+											else if (cpycube[1][4][2] != oppoface && cpycube[0][3][2] != oppoface && (cpycube[1][4][2] != cpycube[2][4][2] || cpycube[0][3][2] != cpycube[0][2][2]))
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'F').replace(/c/g, 'U');
 										}
 									}
 								}
@@ -678,8 +662,8 @@ function creatsecond(startingface, virtualgrid) {
 						console.error("infinity loop")
 						return []
 					}
-					solution = solution.concat([opoface])
-					applimidsolve([opoface], cpycube)
+					solution = solution.concat([oppoface])
+					applimidsolve([oppoface], cpycube)
 					smallcube = compactcube(cpycube)
 				}
 				else
@@ -688,18 +672,16 @@ function creatsecond(startingface, virtualgrid) {
 			solution = solution.concat(solv)
 			applimidsolve(solv, cpycube)
 			smallcube = compactcube(cpycube)
-		}
-		else if (!testsecondlayer([startingface,opoface,i + 1],cpycube,smallcube)) {
-			let solv = ''
-			let count = 0;
+			solv = ''
+			count = 0;
 			while (solv == '') {
 				count++
-				if (!testsecondlayer([startingface,opoface,i + 1],cpycube,smallcube)) {
+				if (!testsecondlayer([startingface,oppoface,i + 1],cpycube,smallcube)) {
 					for (let x = 0; x < 3; x++) {
 							for (let y = 0; y < 3; y++) {
 								for (let z = 0; z < 3; z++) {
 									if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
-										if (smallcube[x][y][z] == opoface) {
+										if (smallcube[x][y][z] == oppoface) {
 										if (x == 0) {
 											if (cpycube[0][1][2] == cpycube[2][2][0] && cpycube[1][0][2] == cpycube[2][0][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'L').replace(/c/g, 'B');
@@ -709,14 +691,14 @@ function creatsecond(startingface, virtualgrid) {
 												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'B').replace(/c/g, 'L');
 											else if (cpycube[0][2][1] == cpycube[2][4][2] && cpycube[1][2][0] == cpycube[2][2][0])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'F').replace(/c/g, 'L');
-											else if (cpycube[0][2][3] == cpycube[2][0][2] && cpycube[1][2][4] == cpycube[2][2][4])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'B').replace(/c/g, 'R');
-											else if (cpycube[0][2][3] == cpycube[2][4][2] && cpycube[1][2][4] == cpycube[2][2][4])
-												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'R');
 											else if (cpycube[0][3][2] == cpycube[2][2][0] && cpycube[1][4][2] == cpycube[2][4][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'L').replace(/c/g, 'F');
 											else if (cpycube[0][3][2] == cpycube[2][2][4] && cpycube[1][4][2] == cpycube[2][4][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'R').replace(/c/g, 'F');
+											else if (cpycube[0][2][3] == cpycube[2][0][2] && cpycube[1][2][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'B').replace(/c/g, 'R');
+											else if (cpycube[0][2][3] == cpycube[2][4][2] && cpycube[1][2][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'R');
 										}
 										else if (x == 2) {
 											if (cpycube[4][1][2] == cpycube[2][2][0] && cpycube[3][0][2] == cpycube[2][0][2])
@@ -727,14 +709,14 @@ function creatsecond(startingface, virtualgrid) {
 												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'B').replace(/c/g, 'L');
 											else if (cpycube[4][2][1] == cpycube[2][4][2] && cpycube[3][2][0] == cpycube[2][2][0])
 												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'L');
-											else if (cpycube[4][2][3] == cpycube[2][0][2] && cpycube[3][2][4] == cpycube[2][2][4])
-												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
-											else if (cpycube[4][2][3] == cpycube[2][4][2] && cpycube[3][2][4] == cpycube[2][2][4])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'F').replace(/c/g, 'R');
 											else if (cpycube[4][3][2] == cpycube[2][2][0] && cpycube[3][4][2] == cpycube[2][4][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'L').replace(/c/g, 'F');
 											else if (cpycube[4][3][2] == cpycube[2][2][4] && cpycube[3][4][2] == cpycube[2][4][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'F');
+											else if (cpycube[4][2][3] == cpycube[2][0][2] && cpycube[3][2][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
+											else if (cpycube[4][2][3] == cpycube[2][4][2] && cpycube[3][2][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'F').replace(/c/g, 'R');
 										}
 										else if (y == 0) {
 											if (cpycube[1][0][2] == cpycube[2][2][0] && cpycube[0][1][2] == cpycube[0][2][2])
@@ -745,14 +727,14 @@ function creatsecond(startingface, virtualgrid) {
 												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'U').replace(/c/g, 'L');
 											else if (cpycube[2][0][1] == cpycube[4][2][2] && cpycube[2][1][0] == cpycube[2][2][0])
 												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'L');
-											else if (cpycube[2][0][3] == cpycube[0][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
-												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'U').replace(/c/g, 'R');
-											else if (cpycube[2][0][3] == cpycube[4][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'D').replace(/c/g, 'R');
 											else if (cpycube[3][0][2] == cpycube[2][2][0] && cpycube[4][1][2] == cpycube[4][2][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'L').replace(/c/g, 'D');
 											else if (cpycube[3][0][2] == cpycube[2][2][4] && cpycube[4][1][2] == cpycube[4][2][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'R').replace(/c/g, 'D');
+											else if (cpycube[2][0][3] == cpycube[0][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'U').replace(/c/g, 'R');
+											else if (cpycube[2][0][3] == cpycube[4][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'D').replace(/c/g, 'R');
 										}
 										else if (y == 2) {
 											if (cpycube[1][4][2] == cpycube[2][2][0] && cpycube[0][3][2] == cpycube[0][2][2])
@@ -763,32 +745,32 @@ function creatsecond(startingface, virtualgrid) {
 												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'U').replace(/c/g, 'L');
 											else if (cpycube[2][4][1] == cpycube[4][2][2] && cpycube[2][3][0] == cpycube[2][2][0])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'D').replace(/c/g, 'L');
-											else if (cpycube[2][4][3] == cpycube[0][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'U').replace(/c/g, 'R');
-											else if (cpycube[2][4][3] == cpycube[4][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
-												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
 											else if (cpycube[3][4][2] == cpycube[2][2][0] && cpycube[4][3][2] == cpycube[4][2][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D');
 											else if (cpycube[3][4][2] == cpycube[2][2][4] && cpycube[4][3][2] == cpycube[4][2][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'R').replace(/c/g, 'D');
+											else if (cpycube[2][4][3] == cpycube[0][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'U').replace(/c/g, 'R');
+											else if (cpycube[2][4][3] == cpycube[4][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
 										}
 										else if (z == 0) {
 											if (cpycube[1][2][0] == cpycube[2][0][2] && cpycube[0][2][1] == cpycube[0][2][2])
-												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'R').replace(/c/g, 'U');
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'B').replace(/c/g, 'U');
 											else if (cpycube[1][2][0] == cpycube[2][4][2] && cpycube[0][2][1] == cpycube[0][2][2])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'L').replace(/c/g, 'U');
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'U');
 											else if (cpycube[2][1][0] == cpycube[0][2][2] && cpycube[2][0][1] == cpycube[2][0][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'U').replace(/c/g, 'B');
 											else if (cpycube[2][1][0] == cpycube[4][2][2] && cpycube[2][0][1] == cpycube[2][0][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'D').replace(/c/g, 'B');
+											else if (cpycube[3][2][0] == cpycube[2][0][2] && cpycube[4][2][1] == cpycube[4][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'B').replace(/c/g, 'D');
+											else if (cpycube[3][2][0] == cpycube[2][4][2] && cpycube[4][2][1] == cpycube[4][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'F').replace(/c/g, 'D');
 											else if (cpycube[2][3][0] == cpycube[0][2][2] && cpycube[2][4][1] == cpycube[2][4][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'U').replace(/c/g, 'F');
 											else if (cpycube[2][3][0] == cpycube[4][2][2] && cpycube[2][4][1] == cpycube[2][4][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'F');
-											else if (cpycube[3][2][0] == cpycube[2][0][2] && cpycube[4][2][1] == cpycube[4][2][2])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'R').replace(/c/g, 'D');
-											else if (cpycube[3][2][0] == cpycube[2][4][2] && cpycube[4][2][1] == cpycube[4][2][2])
-												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'L').replace(/c/g, 'D');
 										}
 										else if (z == 2) {
 											if (cpycube[1][2][4] == cpycube[2][0][2] && cpycube[0][2][3] == cpycube[0][2][2])
@@ -799,14 +781,14 @@ function creatsecond(startingface, virtualgrid) {
 												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'U').replace(/c/g, 'B');
 											else if (cpycube[2][1][4] == cpycube[4][2][2] && cpycube[2][0][3] == cpycube[2][0][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'B');
-											else if (cpycube[2][3][4] == cpycube[0][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
-												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'U').replace(/c/g, 'F');
-											else if (cpycube[2][3][4] == cpycube[4][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
-												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'D').replace(/c/g, 'F');
 											else if (cpycube[3][2][4] == cpycube[2][0][2] && cpycube[4][2][3] == cpycube[4][2][2])
 												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'B').replace(/c/g, 'D');
 											else if (cpycube[3][2][4] == cpycube[2][4][2] && cpycube[4][2][3] == cpycube[4][2][2])
 												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'D');
+											else if (cpycube[2][3][4] == cpycube[0][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'U').replace(/c/g, 'F');
+											else if (cpycube[2][3][4] == cpycube[4][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'D').replace(/c/g, 'F');
 										}
 									}
 								}
@@ -820,8 +802,150 @@ function creatsecond(startingface, virtualgrid) {
 						console.error("infinity loop")
 						return []
 					}
-					solution = solution.concat([opoface])
-					applimidsolve([opoface], cpycube)
+					solution = solution.concat([oppoface])
+					applimidsolve([oppoface], cpycube)
+					smallcube = compactcube(cpycube)
+				}
+				else
+					solv = solv.split(/(?=[U,L,B,R,F,D])/)
+			}
+			solution = solution.concat(solv)
+			applimidsolve(solv, cpycube)
+			smallcube = compactcube(cpycube)
+		}
+		else if (!testsecondlayer([startingface,oppoface,i + 1],cpycube,smallcube)) {
+			let solv = ''
+			let count = 0;
+			while (solv == '') {
+				count++
+				if (!testsecondlayer([startingface,oppoface,i + 1],cpycube,smallcube)) {
+					for (let x = 0; x < 3; x++) {
+							for (let y = 0; y < 3; y++) {
+								for (let z = 0; z < 3; z++) {
+									if ((x + y + z + 1) %2 && (x == 1 || y == 1 || z == 1)) {
+										if (smallcube[x][y][z] == oppoface) {
+										if (x == 0) {
+											if (cpycube[0][1][2] == cpycube[2][2][0] && cpycube[1][0][2] == cpycube[2][0][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'L').replace(/c/g, 'B');
+											else if (cpycube[0][1][2] == cpycube[2][2][4] && cpycube[1][0][2] == cpycube[2][0][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'R').replace(/c/g, 'B');
+											else if (cpycube[0][2][1] == cpycube[2][0][2] && cpycube[1][2][0] == cpycube[2][2][0])
+												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'B').replace(/c/g, 'L');
+											else if (cpycube[0][2][1] == cpycube[2][4][2] && cpycube[1][2][0] == cpycube[2][2][0])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'F').replace(/c/g, 'L');
+											else if (cpycube[0][3][2] == cpycube[2][2][0] && cpycube[1][4][2] == cpycube[2][4][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'L').replace(/c/g, 'F');
+											else if (cpycube[0][3][2] == cpycube[2][2][4] && cpycube[1][4][2] == cpycube[2][4][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'R').replace(/c/g, 'F');
+											else if (cpycube[0][2][3] == cpycube[2][0][2] && cpycube[1][2][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'U').replace(/d/g, 'B').replace(/c/g, 'R');
+											else if (cpycube[0][2][3] == cpycube[2][4][2] && cpycube[1][2][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'R');
+										}
+										else if (x == 2) {
+											if (cpycube[4][1][2] == cpycube[2][2][0] && cpycube[3][0][2] == cpycube[2][0][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'B');
+											else if (cpycube[4][1][2] == cpycube[2][2][4] && cpycube[3][0][2] == cpycube[2][0][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'R').replace(/c/g, 'B');
+											else if (cpycube[4][2][1] == cpycube[2][0][2] && cpycube[3][2][0] == cpycube[2][2][0])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'B').replace(/c/g, 'L');
+											else if (cpycube[4][2][1] == cpycube[2][4][2] && cpycube[3][2][0] == cpycube[2][2][0])
+												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'L');
+											else if (cpycube[4][3][2] == cpycube[2][2][0] && cpycube[3][4][2] == cpycube[2][4][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'L').replace(/c/g, 'F');
+											else if (cpycube[4][3][2] == cpycube[2][2][4] && cpycube[3][4][2] == cpycube[2][4][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'F');
+											else if (cpycube[4][2][3] == cpycube[2][0][2] && cpycube[3][2][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
+											else if (cpycube[4][2][3] == cpycube[2][4][2] && cpycube[3][2][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'D').replace(/d/g, 'F').replace(/c/g, 'R');
+										}
+										else if (y == 0) {
+											if (cpycube[1][0][2] == cpycube[2][2][0] && cpycube[0][1][2] == cpycube[0][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'L').replace(/c/g, 'U');
+											else if (cpycube[1][0][2] == cpycube[2][2][4] && cpycube[0][1][2] == cpycube[0][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'R').replace(/c/g, 'U');
+											else if (cpycube[2][0][1] == cpycube[0][2][2] && cpycube[2][1][0] == cpycube[2][2][0])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'U').replace(/c/g, 'L');
+											else if (cpycube[2][0][1] == cpycube[4][2][2] && cpycube[2][1][0] == cpycube[2][2][0])
+												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'L');
+											else if (cpycube[3][0][2] == cpycube[2][2][0] && cpycube[4][1][2] == cpycube[4][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'L').replace(/c/g, 'D');
+											else if (cpycube[3][0][2] == cpycube[2][2][4] && cpycube[4][1][2] == cpycube[4][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'R').replace(/c/g, 'D');
+											else if (cpycube[2][0][3] == cpycube[0][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'B').replace(/b/g, 'U').replace(/c/g, 'R');
+											else if (cpycube[2][0][3] == cpycube[4][2][2] && cpycube[2][1][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'B').replace(/d/g, 'D').replace(/c/g, 'R');
+										}
+										else if (y == 2) {
+											if (cpycube[1][4][2] == cpycube[2][2][0] && cpycube[0][3][2] == cpycube[0][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'L').replace(/c/g, 'U');
+											else if (cpycube[1][4][2] == cpycube[2][2][4] && cpycube[0][3][2] == cpycube[0][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'U');
+											else if (cpycube[2][4][1] == cpycube[0][2][2] && cpycube[2][3][0] == cpycube[2][2][0])
+												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'U').replace(/c/g, 'L');
+											else if (cpycube[2][4][1] == cpycube[4][2][2] && cpycube[2][3][0] == cpycube[2][2][0])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'D').replace(/c/g, 'L');
+											else if (cpycube[3][4][2] == cpycube[2][2][0] && cpycube[4][3][2] == cpycube[4][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D');
+											else if (cpycube[3][4][2] == cpycube[2][2][4] && cpycube[4][3][2] == cpycube[4][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'R').replace(/c/g, 'D');
+											else if (cpycube[2][4][3] == cpycube[0][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'F').replace(/d/g, 'U').replace(/c/g, 'R');
+											else if (cpycube[2][4][3] == cpycube[4][2][2] && cpycube[2][3][4] == cpycube[2][2][4])
+												solv = "a'b'abaca'c'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
+										}
+										else if (z == 0) {
+											if (cpycube[1][2][0] == cpycube[2][0][2] && cpycube[0][2][1] == cpycube[0][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'B').replace(/c/g, 'U');
+											else if (cpycube[1][2][0] == cpycube[2][4][2] && cpycube[0][2][1] == cpycube[0][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'U');
+											else if (cpycube[2][1][0] == cpycube[0][2][2] && cpycube[2][0][1] == cpycube[2][0][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'U').replace(/c/g, 'B');
+											else if (cpycube[2][1][0] == cpycube[4][2][2] && cpycube[2][0][1] == cpycube[2][0][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'D').replace(/c/g, 'B');
+											else if (cpycube[3][2][0] == cpycube[2][0][2] && cpycube[4][2][1] == cpycube[4][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'B').replace(/c/g, 'D');
+											else if (cpycube[3][2][0] == cpycube[2][4][2] && cpycube[4][2][1] == cpycube[4][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'F').replace(/c/g, 'D');
+											else if (cpycube[2][3][0] == cpycube[0][2][2] && cpycube[2][4][1] == cpycube[2][4][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'L').replace(/d/g, 'U').replace(/c/g, 'F');
+											else if (cpycube[2][3][0] == cpycube[4][2][2] && cpycube[2][4][1] == cpycube[2][4][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'F');
+										}
+										else if (z == 2) {
+											if (cpycube[1][2][4] == cpycube[2][0][2] && cpycube[0][2][3] == cpycube[0][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'B').replace(/c/g, 'U');
+											else if (cpycube[1][2][4] == cpycube[2][4][2] && cpycube[0][2][3] == cpycube[0][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'F').replace(/c/g, 'U');
+											else if (cpycube[2][1][4] == cpycube[0][2][2] && cpycube[2][0][3] == cpycube[2][0][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'U').replace(/c/g, 'B');
+											else if (cpycube[2][1][4] == cpycube[4][2][2] && cpycube[2][0][3] == cpycube[2][0][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'B');
+											else if (cpycube[3][2][4] == cpycube[2][0][2] && cpycube[4][2][3] == cpycube[4][2][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'B').replace(/c/g, 'D');
+											else if (cpycube[3][2][4] == cpycube[2][4][2] && cpycube[4][2][3] == cpycube[4][2][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'D');
+											else if (cpycube[2][3][4] == cpycube[0][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
+												solv = "a'b'abaca'c'".replace(/a/g, 'R').replace(/b/g, 'U').replace(/c/g, 'F');
+											else if (cpycube[2][3][4] == cpycube[4][2][2] && cpycube[2][4][3] == cpycube[2][4][2])
+												solv = "ada'd'a'c'ac".replace(/a/g, 'R').replace(/d/g, 'D').replace(/c/g, 'F');
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if (solv == '') {
+					if (count >= 4) {
+						console.log(i, solution, cpycube)
+						console.error("infinity loop")
+						return []
+					}
+					solution = solution.concat([oppoface])
+					applimidsolve([oppoface], cpycube)
 					smallcube = compactcube(cpycube)
 				}
 				else
@@ -832,10 +956,212 @@ function creatsecond(startingface, virtualgrid) {
 			smallcube = compactcube(cpycube)
 		}
 	}
-	// console.log('=============================================================')
-	// console.log(JSON.parse(JSON.stringify(cpycube)))
-	// console.log(testsecondlayer([startingface,opoface,1],cpycube,compactcube(cpycube)))
 	return solution
+}
+
+function creatoppoface(oppoface, virtualgrid, lastmove) {
+	let solution = ''
+	let smallcube = compactcube(virtualgrid)
+	let crossinfo = countoppocross([oppoface], virtualgrid, smallcube)
+	let cpycube =  JSON.parse(JSON.stringify(virtualgrid));
+	console.log(crossinfo)
+	if (crossinfo[0] == 0) {
+		if (crossinfo[2] == 'x' && crossinfo[3] == 0) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'U').replace(/d/g, 'L').replace(/e/g, 'B');
+		}
+		else if (crossinfo[2] == 'x' && crossinfo[3] == 2) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D').replace(/d/g, 'R').replace(/e/g, 'B');
+		}
+		else if (crossinfo[2] == 'y' && crossinfo[3] == 0) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'U').replace(/b/g, 'R').replace(/c/g, 'B').replace(/d/g, 'L').replace(/e/g, 'D');
+		}
+		else if (crossinfo[2] == 'y' && crossinfo[3] == 2) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'U').replace(/b/g, 'L').replace(/c/g, 'F').replace(/d/g, 'R').replace(/e/g, 'D');
+		}
+		else if (crossinfo[2] == 'z' && crossinfo[3] == 0) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R').replace(/d/g, 'U').replace(/e/g, 'B');
+		}
+		else if (crossinfo[2] == 'z' && crossinfo[3] == 2) {
+			solution = "abcb'c'a'ecdc'd'e'".replace(/a/g, 'F').replace(/b/g, 'U').replace(/c/g, 'L').replace(/d/g, 'D').replace(/e/g, 'B');
+		}
+	}
+	else if (crossinfo[0] == 2 && crossinfo[1] == false) {
+		if (crossinfo[2] == 'x') {
+			if (cpycube[crossinfo[3] * 2][3][2] == oppoface && cpycube[crossinfo[3] * 2][2][3] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'U').replace(/c/g, 'L');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'L');
+				}
+			}
+			else if (cpycube[crossinfo[3] * 2][1][2] == oppoface && cpycube[crossinfo[3] * 2][2][3] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'U').replace(/c/g, 'F');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'F');
+				}
+			}
+			else if (cpycube[crossinfo[3] * 2][1][2] == oppoface && cpycube[crossinfo[3] * 2][2][1] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'U').replace(/c/g, 'R');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'R');
+				}
+			}
+			else if (cpycube[crossinfo[3] * 2][3][2] == oppoface && cpycube[crossinfo[3] * 2][2][1] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'U').replace(/c/g, 'B');
+				}
+				else if (crossinfo[3] == 2) {
+					console.log('dada')
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'B');
+				}
+			}
+		}
+		else if (crossinfo[2] == 'y') {
+			if (cpycube[3][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][3] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'B').replace(/c/g, 'U');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'U');
+				}
+			}
+			else if (cpycube[1][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][3] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'B').replace(/c/g, 'R');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'R');
+				}
+			}
+			else if (cpycube[1][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][1] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'B').replace(/c/g, 'D');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'D');
+				}
+			}
+			else if (cpycube[3][crossinfo[3] * 2][2] == oppoface && cpycube[2][crossinfo[3] * 2][1] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'L');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'F').replace(/c/g, 'L');
+				}
+			}
+		}
+		else if (crossinfo[2] == 'z') {
+			if (cpycube[3][2][crossinfo[3] * 2] == oppoface && cpycube[2][3][crossinfo[3] * 2] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'L').replace(/c/g, 'B');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'B');
+				}
+			}
+			else if (cpycube[1][2][crossinfo[3] * 2] == oppoface && cpycube[2][3][crossinfo[3] * 2] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'L').replace(/c/g, 'D');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'D');
+				}
+			}
+			else if (cpycube[1][2][crossinfo[3] * 2] == oppoface && cpycube[2][1][crossinfo[3] * 2] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'F');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'U').replace(/b/g, 'R').replace(/c/g, 'F');
+				}
+			}
+			else if (cpycube[3][2][crossinfo[3] * 2] == oppoface && cpycube[2][1][crossinfo[3] * 2] == oppoface) {
+				if (crossinfo[3] == 0) {
+					solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'U');
+				}
+				else if (crossinfo[3] == 2) {
+					solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'R').replace(/c/g, 'U');
+				}
+			}
+		}
+	}
+	else if (crossinfo[0] == 2 && crossinfo[1] == true) {
+		if (lastmove[0]) {
+			let ok = 0
+			let rot = 0
+			let i = 0
+			while (!ok) {
+				if (lastmove[i][0] == oppoface) {
+					switch (lastmove[i][1]) {
+						case "'":
+							rot--
+							break;
+						case "2":
+							rot += 2
+							break;
+						default:
+							rot++
+							break;
+					}
+				}
+				else 
+					ok = 1
+				i++;
+			}
+			while (rot%4) {
+				rot++
+				solution += oppoface;
+			}
+			if (solution != '') {
+				solution = solution.concat([oppoface])
+				applimidsolve(solution.split(/(?=[U,L,B,R,F,D])/), cpycube)
+				smallcube = compactcube(cpycube)
+			}
+		}
+		if (crossinfo[2] == 'x' && crossinfo[3] == 0) {
+			if(cpycube[0][1][2] == cpycube[0][2][2])
+				solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'F').replace(/c/g, 'U');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'R').replace(/c/g, 'U');
+		}
+		else if (crossinfo[2] == 'x' && crossinfo[3] == 2) {
+			if(cpycube[4][1][2] == cpycube[4][2][2])
+				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'L').replace(/c/g, 'D');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'F').replace(/c/g, 'D');
+		}
+		else if (crossinfo[2] == 'y' && crossinfo[3] == 0) {
+			if(cpycube[1][0][2] == cpycube[2][0][2])
+				solution = "abcb'c'a'".replace(/a/g, 'R').replace(/b/g, 'D').replace(/c/g, 'B');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'L').replace(/c/g, 'B')
+		}
+		else if (crossinfo[2] == 'y' && crossinfo[3] == 2) {
+			if(cpycube[1][4][2] == cpycube[2][4][2])
+				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'R').replace(/c/g, 'F');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'L').replace(/b/g, 'D').replace(/c/g, 'F');
+		}
+		else if (crossinfo[2] == 'z' && crossinfo[3] == 0) {
+			if(cpycube[1][2][0] == cpycube[2][2][0])
+				solution = "abcb'c'a'".replace(/a/g, 'B').replace(/b/g, 'D').replace(/c/g, 'L');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'F').replace(/c/g, 'L');
+		}
+		else if (crossinfo[2] == 'z' && crossinfo[3] == 2) {
+			if(cpycube[1][2][4] == cpycube[2][2][4])
+				solution = "abcb'c'a'".replace(/a/g, 'D').replace(/b/g, 'B').replace(/c/g, 'R');
+			else
+				solution = "abcb'c'a'".replace(/a/g, 'F').replace(/b/g, 'D').replace(/c/g, 'R');
+		}
+	}
+	console.log(solution)
+	return solution.split(/(?=[U,L,B,R,F,D])/)
 }
 
 function solveit() {
@@ -849,6 +1175,7 @@ function solveit() {
 	let startingface = tmp[1]
 	lstallmod += tmp[0].join('')
 	applimidsolve(tmp[0], virtualgrid)
+	let oppoface = nameMove[(nameMove.indexOf(startingface) + 3) % 6]
 
 	if(document.getElementById('speedy').value == 2){
 		// creat twolayeur
@@ -865,17 +1192,47 @@ function solveit() {
 		applimidsolve(tmp, virtualgrid)
 
 		// creat second
-		tmp = creatsecond(startingface, virtualgrid);
+		tmp = creatsecond(oppoface, startingface, virtualgrid);
 		console.log([tmp])
 		lstallmod += tmp.join('')
 		applimidsolve(tmp, virtualgrid)
 	}
-	
 
-    
+	// creat oppo face
+	let cpylst = lstallmod.split(/(?=[U,L,B,R,F,D])/).reverse()
+	tmp = creatoppoface(oppoface, virtualgrid, cpylst);
+	console.log([tmp])
+	lstallmod += tmp.join('')
+	applimidsolve(tmp, virtualgrid)
 
+	creatmoy(lstallmod.split(/(?=[U,L,B,R,F,D])/).length);
 	document.getElementById('textsolve').value = lstallmod;
 	return lstallmod.split(/(?=[U,L,B,R,F,D])/)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var moyen = 0
+var nbite = 0
+
+function creatmoy(val) {
+	moyen = (moyen * nbite + val) / (nbite + 1)
+	nbite++;
+	document.getElementById('textsolvelength').value = moyen
 }
 
 // document.addEventListener('DOMContentLoaded', function() {

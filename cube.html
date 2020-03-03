@@ -1,7 +1,6 @@
-..
-..
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-.
+<style>
 .D{
 	background:#fff;
 }
@@ -241,147 +240,148 @@ table {
 	display: inline-block
 }
 
-.
+</style>
 
-.
-.
+<head>
+</head>
 
-.
-	. CUBE SOLVER .
-	.
-	.restart.
-	.
-	.
-	.blanc &#x27F3;(D).
-	.bleu &#x27F3;(F).
-	.rouge &#x27F3;(R).
-	.vert &#x27F3;(B).
-	.orange &#x27F3;(L).
-	.jaune &#x27F3;(U).
-	.
-	.blanc &#x27F2;(D').
-	.bleu &#x27F2;(F').
-	.rouge &#x27F2;(R').
-	.vert &#x27F2;(B').
-	.orange &#x27F2;(L').
-	.jaune &#x27F2;(U').
-	.
-	.
-	.test all.
-	. speed -->
-	more speed . less movement
-	.
-	.melanger...appli.
-	.
-	.solve it...appli.
-	.
-	.
-	.
-	.
-		.
-			. .&#x27F2;. .
-			. .&#x2191;. .
-			. .&#x27F3;. .
-		.
-		.
-			. .&#x2190;. .
-			.
-				.
-					.
-						.
-							..
-							..
-							..
-							..
-							..
-							..
+<body>
+	<h1> CUBE SOLVER </h1>
+	<br>
+	<button onclick="restart()">restart</button>
+	<br>
+	<br>
+	<button style="width:100px" onclick="rotBlanc()">blanc &#x27F3;(D)</button>
+	<button style="width:100px" onclick="rotBleu()">bleu &#x27F3;(F)</button>
+	<button style="width:100px" onclick="rotRouge()">rouge &#x27F3;(R)</button>
+	<button style="width:100px" onclick="rotVert()">vert &#x27F3;(B)</button>
+	<button style="width:100px" onclick="rotOrange()">orange &#x27F3;(L)</button>
+	<button style="width:100px" onclick="rotJaune()">jaune &#x27F3;(U)</button>
+	<br>
+	<button style="width:100px" onclick="rotBlancB()">blanc &#x27F2;(D')</button>
+	<button style="width:100px" onclick="rotBleuB()">bleu &#x27F2;(F')</button>
+	<button style="width:100px" onclick="rotRougeB()">rouge &#x27F2;(R')</button>
+	<button style="width:100px" onclick="rotVertB()">vert &#x27F2;(B')</button>
+	<button style="width:100px" onclick="rotOrangeB()">orange &#x27F2;(L')</button>
+	<button style="width:100px" onclick="rotJauneB()">jaune &#x27F2;(U')</button>
+	<br>
+	<br>
+	<button onclick="restart();generatRand();applimodif();solveit();applisolve()">test all</button>
+	more speed<input type="range" min='0' max="2" id="speedy" value="0">less movement
+	<br>
+	<button onclick="generatRand()">melanger</button><input placeholder="ex : B2U'D'B2RF'D'B'L" type="text" id="applilist" value="F'RFB'U'RU2DF2R2D'B2D2F2L'B'RD2L2RL'U'F'UFRU2B2U2D'"><button onclick="applimodif()">appli</button>
+	<br>
+	<button onclick="solveit()">solve it</button><input id="textsolve" value="R'UL'U'U'F'UL'DLB'LD'L'BD2B'B'DBDR'D'RB'DBRDR'D'F'DFDLD'L'DBD'B'D'L'DLDDDDRD'R'D'B'DBD'R'DRDFD'F'"><button onclick="applisolve()">appli</button>
+	<br>
+	<input type="number" readonly value="0" id="textsolvelength">
+	<br>
+	<br>
+	<table class="putinline">
+		<tr>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DQ()">&#x27F2;</div> </th>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DW()">&#x2191;</div> </th>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DE()">&#x27F3;</div> </th>
+		</tr>
+		<tr>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DA()">&#x2190;</div> </th>
+			<th class="bigbutton">
+				<div class="bigbutton">
+					<div id="stage" class="trycenter">
+						<div class="spinner">
+							<div id="U1"></div>
+							<div id="L1"></div>
+							<div id="R1"></div>
+							<div id="F1"></div>
+							<div id="B1"></div>
+							<div id="D1"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U2"></div>
+							<div id="L2"></div>
+							<div id="R2"></div>
+							<div id="F2"></div>
+							<div id="B2"></div>
+							<div id="D2"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U3"></div>
+							<div id="L3"></div>
+							<div id="R3"></div>
+							<div id="F3"></div>
+							<div id="B3"></div>
+							<div id="D3"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U4"></div>
+							<div id="L4"></div>
+							<div id="R4"></div>
+							<div id="F4"></div>
+							<div id="B4"></div>
+							<div id="D4"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U5"></div>
+							<div id="L5"></div>
+							<div id="R5"></div>
+							<div id="F5"></div>
+							<div id="B5"></div>
+							<div id="D5"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U6"></div>
+							<div id="L6"></div>
+							<div id="R6"></div>
+							<div id="F6"></div>
+							<div id="B6"></div>
+							<div id="D6"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U7"></div>
+							<div id="L7"></div>
+							<div id="R7"></div>
+							<div id="F7"></div>
+							<div id="B7"></div>
+							<div id="D7"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
+							<div id="U8"></div>
+							<div id="L8"></div>
+							<div id="R8"></div>
+							<div id="F8"></div>
+							<div id="B8"></div>
+							<div id="D8"></div>
 							
-							..
-							..
-							..
-							..
-							..
-							..
-						.
-					.
-				.
-			.
-			. .&#x2192;. .
-		.
-		.
-			. .. .
-			. .&#x2193;. .
-			. .. .
-		.
-	.
-	.
-	.
-	.
-	.reset view.
-	
-	.
-	.
-	.
-	.
-	.
-	.
-	.
-	.
-	.
-	.
-.
+							<div id="U9"></div>
+							<div id="L9"></div>
+							<div id="R9"></div>
+							<div id="F9"></div>
+							<div id="B9"></div>
+							<div id="D9"></div>
+						</div>
+					</div>
+				</div>
+			</th>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DD()">&#x2192;</div> </th>
+		</tr>
+		<tr>
+			<th class="bigbutton"> <div class="bigbutton"></div> </th>
+			<th class="bigbutton"> <div class="bigbutton" onclick="rot3DX()">&#x2193;</div> </th>
+			<th class="bigbutton"> <div class="bigbutton"></div> </th>
+		</tr>
+	</table>
+	<table id="flatcube" class="putinline">
+	</table>
+	<br>
+	<button onclick="resetView()">reset view</button>
 
-..
-..
-..
-..
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</body>
+
+<script type="text/javascript" src="button.js"></script>
+<script type="text/javascript" src="mouvment.js"></script>
+<script type="text/javascript" src="cube.js"></script>
+<script type="text/javascript" src="screen.js"></script>
 
