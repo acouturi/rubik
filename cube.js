@@ -651,7 +651,7 @@ function creatcross(virtualgrid) {
 	let lstface = nameMove.split("")
 	let keepmov = BADRETURN;
 	let keepface = lstface[0];
-	// let keepface = 'B';
+	// let keepface = 'R';
 	let lsttest = [
 		testercross,
 		testercross,
@@ -966,15 +966,43 @@ function creatsecond(oppoface, startingface, virtualgrid) {
 	return solution
 }
 
+function loopwithformul(virtualgrid, lstformul, oppoface, startingface, test) {
+	if (test([oppoface], virtualgrid,compactcube(virtualgrid)))
+		return []
+
+	let lstmov = null
+		 if (oppoface == 'U') lstmov = ['F', 'R', 'B', 'L', 'F', 'R', 'B',];
+	else if (oppoface == 'D') lstmov = ['F', 'L', 'B', 'R', 'F', 'L', 'B',];
+	else if (oppoface == 'F') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
+	else if (oppoface == 'B') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
+	else if (oppoface == 'R') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
+	else if (oppoface == 'L') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
+
+	for (let j = 0; j < lstformul.length; j++) {
+		const formule = lstformul[j];
+		for (let i = 0; i < 4; i++) {
+			let cpycube = JSON.parse(JSON.stringify(virtualgrid))
+			let testsolv = formule.replace(/a/g, oppoface).replace(/b/g, startingface)
+			.replace(/c/g, lstmov[0 + i]).replace(/d/g, lstmov[1 + i]).replace(/e/g, lstmov[2 + i]).replace(/f/g, lstmov[3 + i])
+			applimidsolve(testsolv.split(/(?=[U,L,B,R,F,D])/), cpycube)
+			if (test([oppoface], cpycube, compactcube(cpycube)))
+				return testsolv.split(/(?=[U,L,B,R,F,D])/)
+		}
+	}
+	console.error('ca marche pas...')
+	return []
+}
+
+// function solvemptyoppocross(startingface, oppoface, virtualgrid) {
 function solvemptyoppocross(virtualgrid, oppoface) {
 	let priority = [4,1,2,0]
 	let lstmov = null
 		 if (oppoface == 'U') lstmov = ['F', 'R', 'B', 'L', 'F', 'R', 'B',];
 	else if (oppoface == 'D') lstmov = ['F', 'L', 'B', 'R', 'F', 'L', 'B',];
-	else if (oppoface == 'F') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
-	else if (oppoface == 'B') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
-	else if (oppoface == 'R') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
-	else if (oppoface == 'L') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
+	else if (oppoface == 'F') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
+	else if (oppoface == 'B') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
+	else if (oppoface == 'R') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
+	else if (oppoface == 'L') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
 	let bestmov = [4, '']
 	for (let i = 0; i < 4; i++) {
 		let cpycube = JSON.parse(JSON.stringify(virtualgrid))
@@ -984,8 +1012,8 @@ function solvemptyoppocross(virtualgrid, oppoface) {
 		let goodcorner = countoppocorner([oppoface], cpycube, smallcube)
 		let index = priority.indexOf(goodcorner)
 		if (index == -1) {
-			console.error('ca marche pas')
-			return ''
+			console.error('ca marche pas !!!!!')
+			return []
 		}
 		if (index < bestmov[0])
 			bestmov = [index, testsolv]
@@ -1034,19 +1062,12 @@ function creatoppocross(oppoface, virtualgrid) {
 		else if (crossinfo[2] == 'z' && crossinfo[3] == 2) lstmov = cpycube[1][2][4] == cpycube[2][2][4] ? ['F', 'D'] : ['D', 'B'];
 		solution += "abcb'c'a'".replace(/a/g, lstmov[0]).replace(/b/g, lstmov[1]).replace(/c/g, oppoface);
 	}
+	if (solution == '')
+		return []
 	return solution.split(/(?=[U,L,B,R,F,D])/)
 }
 
 function creatoppoface(startingface, oppoface, virtualgrid) {
-	if (testoppoface([oppoface], virtualgrid, compactcube(virtualgrid)))
-		return []
-	let lstmov = null
-		 if (oppoface == 'U') lstmov = ['F', 'R', 'B', 'L', 'F', 'R', 'B',];
-	else if (oppoface == 'D') lstmov = ['F', 'L', 'B', 'R', 'F', 'L', 'B',];
-	else if (oppoface == 'F') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
-	else if (oppoface == 'B') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
-	else if (oppoface == 'R') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
-	else if (oppoface == 'L') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
 	let lstformul = [
 		"dad'ada2d'",
 		"da2d'a'da'd'",
@@ -1054,110 +1075,45 @@ function creatoppoface(startingface, oppoface, virtualgrid) {
 		"da2d2a'd2a'd2a2d",
 		"d'c'de'd'cde",
 		"d'cde'd'c'de",
-		"d2bd'a2db'd'a2d'"
-	]
-	for (let j = 0; j < lstformul.length; j++) {
-		const formule = lstformul[j];
-		for (let i = 0; i < 4; i++) {
-			let cpycube = JSON.parse(JSON.stringify(virtualgrid))
-			let testsolv = formule.replace(/a/g, oppoface).replace(/b/g, startingface)
-			.replace(/c/g, lstmov[0 + i]).replace(/d/g, lstmov[1 + i]).replace(/e/g, lstmov[2 + i]).replace(/f/g, lstmov[3 + i])
-			applimidsolve(testsolv.split(/(?=[U,L,B,R,F,D])/), cpycube)
-			let smallcube = compactcube(cpycube)
-			if (testoppoface([oppoface], cpycube,smallcube))
-				return testsolv.split(/(?=[U,L,B,R,F,D])/)
-		}
-	}
-	// solution = solution.replace(/a/g, oppoface).replace(/b/g, startingface).replace(/c/g, lstmov[1]).replace(/e/g, lstmov[1]).replace(/f/g, lstmov[1])
-	console.error('ca marche pas...')
-	return []
+		"d2bd'a2db'd'a2d'"]
+	return loopwithformul(virtualgrid, lstformul, oppoface, startingface, testoppoface)
 }
 
 function placelastscorner(startingface, oppoface, virtualgrid) {
-	if (testlastcorner([oppoface], virtualgrid,compactcube(virtualgrid)))
-		return []
-
-	let lstmov = null
-		 if (oppoface == 'U') lstmov = ['F', 'R', 'B', 'L', 'F', 'R', 'B',];
-	else if (oppoface == 'D') lstmov = ['F', 'L', 'B', 'R', 'F', 'L', 'B',];
-	else if (oppoface == 'F') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
-	else if (oppoface == 'B') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
-	else if (oppoface == 'R') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
-	else if (oppoface == 'L') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
-	"UDFRBL"
-	"abcdef"
 	let lstformul = [
 		"dad'a'd'cd2a'd'a'dad'c'",
-		"cda'd'a'dad'c'dad'a'd'cdc'",
-	]
-	for (let j = 0; j < lstformul.length; j++) {
-		const formule = lstformul[j];
-		for (let i = 0; i < 4; i++) {
-			let cpycube = JSON.parse(JSON.stringify(virtualgrid))
-			let testsolv = formule.replace(/a/g, oppoface).replace(/b/g, startingface)
-			.replace(/c/g, lstmov[0 + i]).replace(/d/g, lstmov[1 + i]).replace(/e/g, lstmov[2 + i]).replace(/f/g, lstmov[3 + i])
-			applimidsolve(testsolv.split(/(?=[U,L,B,R,F,D])/), cpycube)
-			if (testlastcorner([oppoface], cpycube, compactcube(cpycube)))
-				return testsolv.split(/(?=[U,L,B,R,F,D])/)
-		}
-	}
-	console.error('ca marche pas...')
-	return []
+		"cda'd'a'dad'c'dad'a'd'cdc'"]
+	return loopwithformul(virtualgrid, lstformul, oppoface, startingface, testlastcorner)
 }
 
 function placelastsedge(startingface, oppoface, virtualgrid) {
-	if (testlastedges([oppoface], virtualgrid,compactcube(virtualgrid)))
-		return []
-
-	let lstmov = null
-		 if (oppoface == 'U') lstmov = ['F', 'R', 'B', 'L', 'F', 'R', 'B',];
-	else if (oppoface == 'D') lstmov = ['F', 'L', 'B', 'R', 'F', 'L', 'B',];
-	else if (oppoface == 'F') lstmov = ['U', 'R', 'D', 'L', 'U', 'R', 'D',];
-	else if (oppoface == 'B') lstmov = ['U', 'L', 'D', 'R', 'U', 'L', 'D',];
-	else if (oppoface == 'R') lstmov = ['F', 'U', 'B', 'D', 'F', 'U', 'B',];
-	else if (oppoface == 'L') lstmov = ['F', 'D', 'B', 'U', 'F', 'D', 'B',];
-	"UDFRBL"
-	"abcdef"
 	let lstformul = [
 		"d2a'd'a'dadada'd",
 		"d'ad'a'd'a'd'adad2",
 		"d2f2ad2f2a2d2f2ad2f2",
 		"ad'a'da'dada'd'adad2a'd'a",
-		"d2a'd'a'dadada'de2a'e'a'eaeaea'e"
-	]
-	for (let j = 0; j < lstformul.length; j++) {
-		const formule = lstformul[j];
-		for (let i = 0; i < 4; i++) {
-			let cpycube = JSON.parse(JSON.stringify(virtualgrid))
-			let testsolv = formule.replace(/a/g, oppoface).replace(/b/g, startingface)
-			.replace(/c/g, lstmov[0 + i]).replace(/d/g, lstmov[1 + i]).replace(/e/g, lstmov[2 + i]).replace(/f/g, lstmov[3 + i])
-			applimidsolve(testsolv.split(/(?=[U,L,B,R,F,D])/), cpycube)
-			if (testlastedges([oppoface], cpycube, compactcube(cpycube)))
-				return testsolv.split(/(?=[U,L,B,R,F,D])/)
-		}
-	}
-	console.error('ca marche pas...')
-	return []
+		"d2a'd'a'dadada'de2a'e'a'eaeaea'e"]
+	return loopwithformul(virtualgrid, lstformul, oppoface, startingface, testlastedges)
 }
 
 function lasttwist(oppoface, virtualgrid) {
-	let solution = ''
+	let solution = []
 	let cpycube = JSON.parse(JSON.stringify(virtualgrid))
-	// console.log(testlasttwist([oppoface], cpycube, compactcube(cpycube)))
 	while (!testlasttwist([oppoface], cpycube, compactcube(cpycube))) {
 	// while(0) {
-		solution += oppoface
+		solution = solution.concat([oppoface])
 		applimidsolve([oppoface], cpycube)
 		if (solution.length > 5)
 			return console.error("ca marche pas")
 	}
-	return solution.split(/(?=[U,L,B,R,F,D])/)
+	return solution
 }
 
 function cleanoutput(solution) {
 	let done = 0
+
 	if (solution.join('') == [""])
-		return ''
+		return []
 	while (!done) {
 		done = 1
 		//sort
@@ -1187,7 +1143,7 @@ function cleanoutput(solution) {
 			}
 			// nameMove
 
-			if (JSON.stringify(tmpsolv) != JSON.stringify(solution)) {
+			if (tmpsolv.join('') != solution.join('')) {
 				solution = tmpsolv
 			}
 			else
@@ -1198,9 +1154,10 @@ function cleanoutput(solution) {
 		while (!ok) {
 			let i = 0
 			let tmpsolv = []
+			let cpabon = 0
 			while (i < solution.length) {
 				let curentmov = solution[i][0]
-				let delta = 0 
+				let delta = 0
 				while (solution[i] && curentmov == solution[i][0]) {
 					switch (solution[i][1]) {
 						case "'":
@@ -1233,8 +1190,13 @@ function cleanoutput(solution) {
 						break;
 				}
 				i++;
+				// console.log(i)
+				// if (cpabon++ > 100) {
+				// 	console.log(tmpsolv)
+				// 	return []
+				// }
 			}
-			if (JSON.stringify(tmpsolv) != JSON.stringify(solution)) {
+			if (tmpsolv.join('') != solution.join('')) {
 				solution = tmpsolv
 				done = 0
 			}
@@ -1242,36 +1204,36 @@ function cleanoutput(solution) {
 				ok = 1
 		}
 	}
-	return solution.join("")
+	return solution
 }
 
 function solveit() {
 	// algo basique v3 based on v1
-	let lstallmod = '';
+	let lstallmod = [];
 	let virtualgrid = JSON.parse(JSON.stringify(curentgrid));
 
 	// creat cross
 	let tmp = creatcross(virtualgrid);
 	console.log(tmp)
 	let startingface = tmp[1]
-	lstallmod += tmp[0].join('')
+	lstallmod = lstallmod.concat(tmp[0])
 	applimidsolve(tmp[0], virtualgrid)
 	let oppoface = nameMove[(nameMove.indexOf(startingface) + 3) % 6]
 
 	// creat face
 	tmp = creatface(startingface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
 
 	// creat second
 	tmp = creatsecond(oppoface, startingface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
 	
 
-	let lastmove = lstallmod.split(/(?=[U,L,B,R,F,D])/).reverse()
+	let lastmove = JSON.parse(JSON.stringify(lstallmod)).reverse()
 	if (lastmove[0]) {
 		let ok = 0
 		let rot = 0
@@ -1310,37 +1272,45 @@ function solveit() {
 	// creat oppo cross
 	tmp = creatoppocross(oppoface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
 
+	
 	// creat oppo face
 	tmp = creatoppoface(startingface, oppoface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
+
 
 	// place and twist oppo corner
 	tmp = placelastscorner(startingface, oppoface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
+
+	// document.getElementById('textsolve').value = lstallmod.join('')
+	// return lstallmod
+
 
 	// place oppo edge
 	tmp = placelastsedge(startingface, oppoface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
 
 	// last oppo rotation
 	tmp = lasttwist(oppoface, virtualgrid);
 	console.log([tmp])
-	lstallmod += tmp.join('')
+	lstallmod = lstallmod.concat(tmp)
 	applimidsolve(tmp, virtualgrid)
 
+	console.log([lstallmod])
 	// clean sort
-	lstallmod = cleanoutput(lstallmod.split(/(?=[U,L,B,R,F,D])/))
-	console.log(lstallmod.split(/(?=[U,L,B,R,F,D])/))
+	lstallmod = cleanoutput(lstallmod)
+	console.log([lstallmod])
 
-	document.getElementById('textsolve').value = lstallmod//.join('')
-	return lstallmod.split(/(?=[U,L,B,R,F,D])/)
+	document.getElementById('textsolve').value = lstallmod.join('')
+	return lstallmod
 }
+

@@ -91,6 +91,14 @@ function applisolve() {
 	lstappli(listmodif);
 }
 
+function testall() {
+	restart();
+	generatRand();
+	applimodif();
+	solveit();
+	applisolve();
+}
+
 function generatRand() {
 	let nameMove = 'ULBRFD';
 	let addMove = ["'","","2"]
