@@ -270,13 +270,17 @@ table {
 	<br>
 	<br>
 	<button onclick="testall()">test all</button>
-	more speed<input type="range" min='0' max="1" id="speedy" value="0">less movement
+	more speed<input type="range" min='0' max="1" id="speedy" value="1">less movement
 	<br>
-	<button onclick="generatRand()">melanger</button><input placeholder="ex : B2U'D'B2RF'D'B'L" type="text" id="applilist" value="R2B2RLR2D'R2FU2F2U2B'F2L2U2D2B2F'R'LU2FD'FU2F2D'L2B2U2">
+	<button onclick="generatRand()">melanger</button>
+	<input placeholder="ex : B2U'D'B2RF'D'B'L" type="text" id="applilist" value="">
 	<button onclick="applimodif()">appli</button>
 	<br>
-	<button onclick="solveit()">solve it</button><input id="textsolve" value="">
+	<button onclick="solveit()">solve it</button>
+	<textarea id="textsolve" value="" readonly></textarea>
 	<button onclick="applisolve()">appli</button>
+	<br>
+	<input type="number" id="solvelength" readonly value="0">
 	<br>
 	<br>
 	<br>
@@ -384,8 +388,11 @@ table {
 	<br>
 </body>
 
+<script type="text/javascript" src="solvefct.js"></script>
 <script type="text/javascript" src="button.js"></script>
 <script type="text/javascript" src="mouvment.js"></script>
+<script type="text/javascript" src="const.js"></script>
+<script type="text/javascript" src="tests.js"></script>
 <script type="text/javascript" src="cube.js"></script>
 <script type="text/javascript" src="screen.js"></script>
 

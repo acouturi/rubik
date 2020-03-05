@@ -100,9 +100,6 @@ function testall() {
 }
 
 function generatRand() {
-	let nameMove = 'ULBRFD';
-	let addMove = ["'","","2"]
-
 	let rand = ''
 	let lastmove = ''
 	for (let i = 0; i < 30; i++) {
