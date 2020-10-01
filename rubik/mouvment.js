@@ -32,9 +32,9 @@ function rotJaune(testgrid = curentgrid){
 	changegrid[1][4][1] = changegrid[1][3][4];
 	changegrid[1][3][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotJauneB(testgrid = curentgrid){
@@ -70,9 +70,9 @@ function rotJauneB(testgrid = curentgrid){
 	changegrid[1][4][1] = changegrid[1][1][0];
 	changegrid[1][1][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotJaune2(testgrid = curentgrid){
@@ -113,9 +113,9 @@ function rotJaune2(testgrid = curentgrid){
 	changegrid[1][3][4] = changegrid[1][1][0];
 	changegrid[1][1][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBlanc(testgrid = curentgrid){
@@ -151,9 +151,9 @@ function rotBlanc(testgrid = curentgrid){
 	changegrid[3][4][1] = changegrid[3][1][0];
 	changegrid[3][1][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBlancB(testgrid = curentgrid){
@@ -189,9 +189,9 @@ function rotBlancB(testgrid = curentgrid){
 	changegrid[3][4][1] = changegrid[3][3][4];
 	changegrid[3][3][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBlanc2(testgrid = curentgrid){
@@ -232,9 +232,9 @@ function rotBlanc2(testgrid = curentgrid){
 	changegrid[3][1][0] = changegrid[3][3][4];
 	changegrid[3][3][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotOrange(testgrid = curentgrid){
@@ -270,9 +270,9 @@ function rotOrange(testgrid = curentgrid){
 	changegrid[4][1][1] = changegrid[3][4][1];
 	changegrid[3][4][1] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotOrangeB(testgrid = curentgrid){
@@ -308,9 +308,9 @@ function rotOrangeB(testgrid = curentgrid){
 	changegrid[4][1][1] = changegrid[1][0][1];
 	changegrid[1][0][1] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotOrange2(testgrid = curentgrid){
@@ -351,9 +351,9 @@ function rotOrange2(testgrid = curentgrid){
 	changegrid[3][4][1] = changegrid[1][0][1];
 	changegrid[1][0][1] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotRouge(testgrid = curentgrid){
@@ -389,9 +389,9 @@ function rotRouge(testgrid = curentgrid){
 	changegrid[4][1][3] = changegrid[1][0][3];
 	changegrid[1][0][3] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotRougeB(testgrid = curentgrid){
@@ -427,9 +427,9 @@ function rotRougeB(testgrid = curentgrid){
 	changegrid[4][1][3] = changegrid[3][4][3];
 	changegrid[3][4][3] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotRouge2(testgrid = curentgrid){
@@ -470,9 +470,9 @@ function rotRouge2(testgrid = curentgrid){
 	changegrid[1][0][3] = changegrid[3][4][3];
 	changegrid[3][4][3] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotVert(testgrid = curentgrid){
@@ -508,9 +508,9 @@ function rotVert(testgrid = curentgrid){
 	changegrid[4][1][1] = changegrid[1][1][0];
 	changegrid[1][1][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotVertB(testgrid = curentgrid){
@@ -546,9 +546,9 @@ function rotVertB(testgrid = curentgrid){
 	changegrid[4][1][1] = changegrid[3][1][4];
 	changegrid[3][1][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotVert2(testgrid = curentgrid){
@@ -589,9 +589,9 @@ function rotVert2(testgrid = curentgrid){
 	changegrid[1][1][0] = changegrid[3][1][4];
 	changegrid[3][1][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBleu(testgrid = curentgrid){
@@ -627,9 +627,9 @@ function rotBleu(testgrid = curentgrid){
 	changegrid[4][3][1] = changegrid[3][3][4];
 	changegrid[3][3][4] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBleuB(testgrid = curentgrid){
@@ -665,9 +665,9 @@ function rotBleuB(testgrid = curentgrid){
 	changegrid[4][3][1] = changegrid[1][3][0];
 	changegrid[1][3][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }
 
 function rotBleu2(testgrid = curentgrid){
@@ -708,7 +708,7 @@ function rotBleu2(testgrid = curentgrid){
 	changegrid[3][3][4] = changegrid[1][3][0];
 	changegrid[1][3][0] = tmp;
 
-	if (curentgrid == testgrid) {
-		refresh_screen();
-	}
+	// if (curentgrid == testgrid) {
+	// 	refresh_screen();
+	// }
 }

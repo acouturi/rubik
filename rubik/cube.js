@@ -1,5 +1,5 @@
 
-let curentgrid = JSON.parse(JSON.stringify(newgrid));
+// let curentgrid = JSON.parse(JSON.stringify(newgrid));
 
 function compactcube(bigcube) {	
 	let newcube = [[[],[],[]],[[],[],[]],[[],[],[]]];	
@@ -52,13 +52,13 @@ function compactcube(bigcube) {
 	return newcube;	
 }
 
-function solveit() {
+function solveit(speed) {
 	// algo basique v3 based on v1
 	let keepsolution = null;
 
 	for (let i = 0; i < nameMove.length; i++) {
 		let startingface = nameMove[i]
-		console.log("start test for " + nameMove[i])
+		console.log("debut test sur " + nameMove[i])
 		let oppoface = nameMove[(nameMove.indexOf(startingface) + 3) % 6]
 		let virtualgrid = JSON.parse(JSON.stringify(curentgrid));
 		let lstallmod = [];
@@ -120,8 +120,8 @@ function solveit() {
 		// console.log([lstallmod])
 		lstallmod = cleanoutput(lstallmod)
 		// console.log([lstallmod])
-		console.log(lstallmod.length + " mouvement for solve")
-		if (document.getElementById('speedy').value == 0)
+		console.log(lstallmod.length + " mouvements pour resoudre")
+		if (speed == 0)
 			i = nameMove.length
 		if (keepsolution == null)
 			keepsolution = lstallmod;
@@ -129,8 +129,6 @@ function solveit() {
 			keepsolution = lstallmod
 	};
 
-	document.getElementById('textsolve').value = keepsolution.join('')
-	document.getElementById('solvelength').value = keepsolution.length
 	return keepsolution
 }
 

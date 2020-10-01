@@ -91,6 +91,7 @@ function resetView() {
 	homeCube.style.transform = "rotateX(70deg) rotateZ(25deg)"
 }
 
+// style="transform: rotateX(-5deg) rotateX(-5deg) rotateX(-5deg)  rotateY(5deg) rotateY(5deg) rotateY(5deg) rotateY(5deg) rotateY(5deg);"
 homeCube.style.transform = "rotateX(70deg) rotateZ(25deg)"
 
 /*	1		2		3
@@ -106,6 +107,13 @@ a	cos		-sin	0
 Z =	sin		cos		0
 c	0		0		1
 */
+// Q->D
+// E->A
+// D->
+// A->
+// W->
+// X-?
+
 
 let angleX = 1;
 let angleY = 0;
@@ -148,7 +156,7 @@ function rot3DX(){
 	homeCube.style.transform += 'rotateX('+-degXrot+'deg)';
 }
 
-function rot3DD(){
+function rot3DE(){
 	// let tmpx = angleX * Math.cos(angle) + angleZ * Math.sin(angle);
 	// let tmpy = angleY;
 	// let tmpz = angleX * Math.sin(angle) + angleZ * Math.cos(angle);
@@ -164,7 +172,7 @@ function rot3DD(){
 	homeCube.style.transform += 'rotateY('+degYrot+'deg)';
 }
 
-function rot3DA(){
+function rot3DQ(){
 	// let tmpx = angleX * Math.cos(-angle) + angleZ * Math.sin(-angle);
 	// let tmpy = angleY;
 	// let tmpz = - angleX * Math.sin(-angle) + angleZ * Math.cos(-angle);
@@ -180,7 +188,7 @@ function rot3DA(){
 	homeCube.style.transform += 'rotateY('+-degYrot+'deg)';
 }
 
-function rot3DQ(){
+function rot3DD(){
 	// let tmpx = angleX * Math.cos(angle) - angleY * Math.sin(angle);
 	// let tmpy = angleX * Math.sin(angle) + angleY * Math.cos(angle);
 	// let tmpz = angleZ;
@@ -196,7 +204,7 @@ function rot3DQ(){
 	homeCube.style.transform += 'rotateZ('+-degZrot+'deg)';
 }
 
-function rot3DE(){
+function rot3DA(){
 	// let tmpx = angleX * Math.cos(-angle) - angleY * Math.sin(-angle);
 	// let tmpy = angleX * Math.sin(-angle) + angleY * Math.cos(-angle);
 	// let tmpz = angleZ;

@@ -1,4 +1,6 @@
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!DOCTYPE html>
+
+<html lang="fr">
 
 <style>
 .D{
@@ -18,9 +20,6 @@
 }
 .U{
 	background:#ff0;
-}
-.P{
-	background:#faf;
 }
 
 .case {
@@ -249,39 +248,34 @@ table {
 </head>
 
 <body>
-	<h1> CUBE SOLVER </h1>
+	<h1> CUBE SOLVEUR </h1>
 	<br>
-	<button onclick="restart()">restart</button>
-	<br>
-	<br>
-	<button style="width:100px" onclick="rotBlanc()">blanc &#x27F3;(D)</button>
-	<button style="width:100px" onclick="rotBleu()">bleu &#x27F3;(F)</button>
-	<button style="width:100px" onclick="rotRouge()">rouge &#x27F3;(R)</button>
-	<button style="width:100px" onclick="rotVert()">vert &#x27F3;(B)</button>
-	<button style="width:100px" onclick="rotOrange()">orange &#x27F3;(L)</button>
-	<button style="width:100px" onclick="rotJaune()">jaune &#x27F3;(U)</button>
-	<br>
-	<button style="width:100px" onclick="rotBlancB()">blanc &#x27F2;(D')</button>
-	<button style="width:100px" onclick="rotBleuB()">bleu &#x27F2;(F')</button>
-	<button style="width:100px" onclick="rotRougeB()">rouge &#x27F2;(R')</button>
-	<button style="width:100px" onclick="rotVertB()">vert &#x27F2;(B')</button>
-	<button style="width:100px" onclick="rotOrangeB()">orange &#x27F2;(L')</button>
-	<button style="width:100px" onclick="rotJauneB()">jaune &#x27F2;(U')</button>
+	<button onclick="restart()">redemarer</button>
 	<br>
 	<br>
-	<button onclick="testall()">test all</button>
-	more speed<input type="range" min='0' max="1" id="speedy" value="1">less movement
+	<button style="width:100px" onclick="rotBlanc();refresh_screen()">blanc &#x27F3;(D)</button>
+	<button style="width:100px" onclick="rotBleu();refresh_screen()">bleu &#x27F3;(F)</button>
+	<button style="width:100px" onclick="rotRouge();refresh_screen()">rouge &#x27F3;(R)</button>
+	<button style="width:100px" onclick="rotVert();refresh_screen()">vert &#x27F3;(B)</button>
+	<button style="width:100px" onclick="rotOrange();refresh_screen()">orange &#x27F3;(L)</button>
+	<button style="width:100px" onclick="rotJaune();refresh_screen()">jaune &#x27F3;(U)</button>
 	<br>
-	<button onclick="generatRand()">melanger</button>
-	<input placeholder="ex : B2U'D'B2RF'D'B'L" type="text" id="applilist" value="">
-	<button onclick="applimodif()">appli</button>
+	<button style="width:100px" onclick="rotBlancB();refresh_screen()">blanc &#x27F2;(D')</button>
+	<button style="width:100px" onclick="rotBleuB();refresh_screen()">bleu &#x27F2;(F')</button>
+	<button style="width:100px" onclick="rotRougeB();refresh_screen()">rouge &#x27F2;(R')</button>
+	<button style="width:100px" onclick="rotVertB();refresh_screen()">vert &#x27F2;(B')</button>
+	<button style="width:100px" onclick="rotOrangeB();refresh_screen()">orange &#x27F2;(L')</button>
+	<button style="width:100px" onclick="rotJauneB();refresh_screen()">jaune &#x27F2;(U')</button>
 	<br>
-	<button onclick="solveit()">solve it</button>
-	<textarea id="textsolve" value="" readonly></textarea>
-	<button onclick="applisolve()">appli</button>
 	<br>
-	<input type="number" id="solvelength" readonly value="0">
+	<button onclick="restart();generatRand();applimodif();launchsolv();applisolve()">tout executer</button>
+	plus rapide<input type="range" min='0' max="1" id="speedy" value="0">moins de movement
 	<br>
+	<button onclick="generatRand()">melanger</button><input placeholder="ex : B2U'D'B2RF'D'B'L" type="text" id="applilist"><button onclick="applimodif()">appliquer</button>
+	<br>
+	<button onclick="launchsolv()">resoudre</button><input id="textsolve"><button onclick="applisolve()">appliquer</button>
+	<br>
+	<div id="nbmouv"></div>
 	<br>
 	<br>
 	<table class="putinline">
@@ -373,7 +367,7 @@ table {
 	<table id="flatcube" class="putinline">
 	</table>
 	<br>
-	<button onclick="resetView()">reset view</button>
+	<button onclick="resetView()">reinitialiser la vu</button>
 
 	<br>
 	<br>
@@ -388,11 +382,11 @@ table {
 	<br>
 </body>
 
-<script type="text/javascript" src="solvefct.js"></script>
-<script type="text/javascript" src="button.js"></script>
-<script type="text/javascript" src="mouvment.js"></script>
-<script type="text/javascript" src="const.js"></script>
-<script type="text/javascript" src="tests.js"></script>
-<script type="text/javascript" src="cube.js"></script>
-<script type="text/javascript" src="screen.js"></script>
-
+<script type="text/javascript" src="./rubik/solvefct.js"></script>
+<script type="text/javascript" src="./rubik/button.js"></script>
+<script type="text/javascript" src="./rubik/mouvment.js"></script>
+<script type="text/javascript" src="./rubik/const.js"></script>
+<script type="text/javascript" src="./rubik/tests.js"></script>
+<script type="text/javascript" src="./rubik/cube.js"></script>
+<script type="text/javascript" src="./rubik/screen.js"></script>
+</html>

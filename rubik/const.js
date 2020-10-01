@@ -40,3 +40,4 @@ const newgrid = [
 	 [' ','D','D','D',' '],
 	 [' ',' ',' ',' ',' ']]
 ]
+let curentgrid = JSON.parse(JSON.stringify(newgrid));
